@@ -1,1 +1,4 @@
-pnpm exec lint-staged
+#!/usr/bin/env sh
+# Run lint-staged via npx to skip pnpm's dep-status precheck, which
+# otherwise loops back into a full `pnpm install`.
+npx --no-install lint-staged
