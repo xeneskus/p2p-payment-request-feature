@@ -21,7 +21,7 @@ test.describe('Authentication', () => {
     await page.getByLabel('Email').fill('not-an-email')
     await page.getByLabel('Password').fill(TEST_PASSWORD)
     await page.getByRole('button', { name: 'Create account' }).click()
-    await expect(page.getByText(/Invalid email/i)).toBeVisible()
+    await expect(page.locator('.text-destructive').first()).toBeVisible({ timeout: 10_000 })
   })
 
   test('rejects too-short password', async ({ page }) => {

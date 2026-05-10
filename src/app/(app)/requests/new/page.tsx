@@ -84,6 +84,7 @@ export default function NewRequestPage() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-4"
             data-testid="new-request-form"
+            noValidate
           >
             <div className="space-y-2">
               <Label htmlFor="toEmail">Recipient email</Label>

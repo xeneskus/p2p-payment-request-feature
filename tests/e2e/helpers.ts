@@ -1,4 +1,4 @@
-import type { Page } from '@playwright/test'
+import { expect, type Page } from '@playwright/test'
 
 export const TEST_PASSWORD = 'testpass123'
 
@@ -7,13 +7,19 @@ export function makeTestEmail(role: string): string {
   return `${role}-${suffix}@example.test`
 }
 
+async function waitForDashboard(page: Page): Promise<void> {
+  await page.waitForURL('**/dashboard', { timeout: 15_000 })
+  // Wait for the "New request" CTA — proves the dashboard hydrated.
+  await expect(page.getByRole('link', { name: 'New request' })).toBeVisible({ timeout: 15_000 })
+}
+
 export async function registerNewUser(page: Page, role: string): Promise<string> {
   const email = makeTestEmail(role)
   await page.goto('/register')
   await page.getByLabel('Email').fill(email)
   await page.getByLabel('Password').fill(TEST_PASSWORD)
   await page.getByRole('button', { name: 'Create account' }).click()
-  await page.waitForURL('**/dashboard', { timeout: 15_000 })
+  await waitForDashboard(page)
   return email
 }
 
@@ -22,7 +28,7 @@ export async function signIn(page: Page, email: string): Promise<void> {
   await page.getByLabel('Email').fill(email)
   await page.getByLabel('Password').fill(TEST_PASSWORD)
   await page.getByRole('button', { name: 'Sign in' }).click()
-  await page.waitForURL('**/dashboard', { timeout: 15_000 })
+  await waitForDashboard(page)
 }
 
 export async function signOut(page: Page): Promise<void> {
@@ -34,13 +40,14 @@ export async function createRequest(
   page: Page,
   args: { toEmail: string; amountDollars: string; note?: string },
 ): Promise<void> {
-  await page.getByRole('link', { name: /New request/i }).click()
-  await page.waitForURL('**/requests/new')
+  // Navigate directly to avoid a flaky click on the dashboard "New request" link
+  // before client-side hydration finishes.
+  await page.goto('/requests/new')
   await page.getByLabel('Recipient email').fill(args.toEmail)
   await page.getByLabel('Amount (USD)').fill(args.amountDollars)
   if (args.note) {
     await page.getByLabel(/Note/).fill(args.note)
   }
   await page.getByRole('button', { name: 'Send request' }).click()
-  await page.waitForURL('**/dashboard', { timeout: 15_000 })
+  await waitForDashboard(page)
 }

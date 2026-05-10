@@ -2,8 +2,8 @@
 
 > A peer-to-peer payment request app — request money from a friend by email, share a link, and let them pay, decline, or cancel. Built for the Lovie interview assignment with the **GitHub Spec-Kit** workflow.
 
-**🔗 Live demo:** _to be filled in after Vercel deploy_
-**🎬 Screen recording:** _Playwright videos in `playwright-report/` once `pnpm test:e2e` runs._
+**🔗 Live demo:** https://p2p-payment-request-feature.vercel.app
+**🎬 Screen recording:** Playwright records `.webm` for every spec under `test-results/<spec>/video.webm`. Run `pnpm test:e2e` and inspect the HTML report with `pnpm exec playwright show-report`.
 
 ---
 
