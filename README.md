@@ -127,8 +127,8 @@ src/
 ├── components/                          shadcn primitives + project components
 └── middleware.ts                        Edge auth guard
 
-tests/unit/                              Vitest specs
-tests/e2e/                               Playwright specs (when added)
+tests/unit/                              Vitest specs (36 tests, all green)
+tests/e2e/                               Playwright specs (9 tests, all green)
 
 supabase/migrations/0001_initial.sql     profiles, payment_requests, RLS, indexes
 ```
@@ -153,7 +153,7 @@ Full request/response shapes, error codes, and validation rules live in [`specs/
 
 ## Cover note
 
-See [`docs/cover-note.md`](./docs/cover-note.md) for the assignment's 2-3 paragraph reflection (most challenging part, how AI helped, key trade-offs).
+See [`docs/cover-note.md`](./docs/cover-note.md) for the assignment's reflection on the two required questions: most challenging part and how AI tools helped.
 
 ---
 
